@@ -1,0 +1,31 @@
+name: Auto-Build Anthology
+
+on:
+  push:
+    paths:
+      - 'images/**'
+      - 'template.html'
+      - 'builder.js'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run Builder Script
+        run: node builder.js
+
+      - name: Commit and Push Anthology
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add anthology.html
+          git commit -m "Update anthology gallery [skip ci]" || echo "No changes"
+          git push
