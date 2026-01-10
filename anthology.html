@@ -45,11 +45,22 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* 15 Unique Item Placements */
         .item-1 { grid-column: span 3; height: 500px; --float-time: 7s; }
         .item-2 { grid-column: span 3; height: 420px; margin-top: 80px; --float-time: 9s; }
         .item-3 { grid-column: span 2; height: 380px; --float-time: 8s; }
         .item-4 { grid-column: span 4; height: 480px; margin-top: -60px; --float-time: 10s; }
         .item-5 { grid-column: span 6; height: 320px; --float-time: 12s; }
+        .item-6 { grid-column: span 3; height: 450px; --float-time: 11s; }
+        .item-7 { grid-column: span 3; height: 550px; margin-top: -40px; --float-time: 13s; }
+        .item-8 { grid-column: span 2; height: 400px; --float-time: 6s; }
+        .item-9 { grid-column: span 2; height: 400px; --float-time: 8.5s; }
+        .item-10 { grid-column: span 2; height: 400px; --float-time: 7.5s; }
+        .item-11 { grid-column: span 4; height: 500px; --float-time: 14s; }
+        .item-12 { grid-column: span 2; height: 450px; margin-top: 50px; --float-time: 9.5s; }
+        .item-13 { grid-column: span 3; height: 400px; --float-time: 11.5s; }
+        .item-14 { grid-column: span 3; height: 400px; --float-time: 10.5s; }
+        .item-15 { grid-column: span 6; height: 350px; --float-time: 15s; }
         
         @keyframes float-slow {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -97,16 +108,28 @@
         .cinema-overlay {
             position: fixed; inset: 0; 
             background: radial-gradient(circle at center, #0a192f 0%, #000 100%);
-            z-index: 2000; visibility: hidden; opacity: 0; display: flex; flex-direction: column;
+            z-index: 2000; visibility: hidden; opacity: 0; 
+            display: flex; flex-direction: column; /* Vertical layout */
             transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
             perspective: 2000px; 
         }
         .cinema-overlay.active { visibility: visible; opacity: 1; }
-        .cinema-header { padding: 40px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; }
+        
+        .cinema-header { 
+            padding: 30px 60px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            z-index: 2100;
+            height: 15vh;
+        }
         .close-cinema { color: var(--accent); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--accent); }
 
-        .stage-3d { flex: 1; position: relative; width: 100%; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; }
-        .cylinder { position: relative; width: 50vw; height: 45vh; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
+        .stage-3d { 
+            flex: 1; /* Takes up middle space */
+            position: relative; width: 100%; 
+            display: flex; align-items: center; justify-content: center; 
+            transform-style: preserve-3d; 
+        }
+        .cylinder { position: relative; width: 50vw; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
         .slide-3d { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 1s; }
 
         .img-wrapper-3d {
@@ -114,37 +137,48 @@
             box-shadow: 0 30px 100px rgba(0,0,0,0.8);
             -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 60%, rgba(255,255,255,0.1));
         }
-        .img-wrapper-3d img { max-width: 60vw; max-height: 50vh; width: auto; height: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; }
+        
+        /* Ensures image never hits navigation buttons */
+        .img-wrapper-3d img { 
+            max-width: 65vw; 
+            max-height: 40vh; 
+            width: auto; height: auto; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 4px; 
+        }
 
-        /* CONSISTENT TAG STYLE */
         .tag-3d { 
             position: absolute; top: 20px; left: 20px; 
             font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; 
             color: var(--accent-bright); opacity: 0; transition: 0.5s 0.8s; 
         }
 
-        /* CONSISTENT CAPTION STYLE WITH VERTICAL BAR */
         .cap-3d { 
             position: absolute; bottom: 20px; left: 20px; right: 20px; 
             font-size: 14px; background: rgba(0,0,0,0.6); 
             padding: 12px 20px; border-radius: 4px; 
             opacity: 0; transition: 0.5s 0.8s; 
             border-left: 3px solid var(--accent-bright); 
-            line-height: 1.5;
-            backdrop-filter: blur(10px);
-            text-align: left;
+            line-height: 1.5; backdrop-filter: blur(10px); text-align: left;
         }
 
         .active-slide .tag-3d, .active-slide .cap-3d { opacity: 1; }
         .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); }
 
-        .cinema-nav { padding: 60px; display: flex; gap: 20px; justify-content: center; z-index: 2100; }
-        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
+        .cinema-nav { 
+            padding: 40px 0; 
+            display: flex; gap: 30px; justify-content: center; 
+            z-index: 2100;
+            height: 15vh; /* Dedicated navigation area */
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        }
+        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 35px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
         .nav-link:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.1); }
 
         @media (max-width: 900px) {
             .archive-float { grid-template-columns: 1fr; }
-            .item-1, .item-2, .item-3, .item-4, .item-5 { grid-column: span 1; height: 350px; margin: 0 !important; }
+            .album-trigger { grid-column: span 1 !important; height: 350px !important; margin: 0 !important; }
+            .img-wrapper-3d img { max-width: 80vw; max-height: 35vh; }
         }
     </style>
 </head>
@@ -158,76 +192,28 @@
         <h1 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; margin-top: 20px; font-size: clamp(30px, 6vw, 60px);">Visual <i>Anthology</i></h1>
     </header>
 
-    <main class="archive-float">
-
-            <div class="album-trigger item-1" onclick="openCinema('album1')">
-                <img src="images/2026-UNC/2022-Orlando-IMG_1188.webp">
-                <div class="trigger-info">
-                    <span>PROJECT 01</span>
-                    <h3>2026 UNC</h3>
-                </div>
-                <div id="album1-data" style="display:none;">
-                    <div class="imgs"><img src="images/2026-UNC/2022-Orlando-IMG_1188.webp" data-tag="2022 • Orlando" data-cap="IMG_1188">
-<img src="images/2026-UNC/2022-Orlando-IMG_1188.webp" data-tag="2022 • Orlando" data-cap="IMG_1188">
-<img src="images/2026-UNC/2022-Orlando-IMG_2943.webp" data-tag="2022 • Orlando" data-cap="IMG_2943">
-<img src="images/2026-UNC/2022-Orlando-IMG_2943.webp" data-tag="2022 • Orlando" data-cap="IMG_2943"></div>
-                </div>
-            </div>
-            <div class="album-trigger item-2" onclick="openCinema('album2')">
-                <img src="images/2025-UNC/2025-Chapel Hill-20251202 SRG Portrait_06299.webp">
-                <div class="trigger-info">
-                    <span>PROJECT 02</span>
-                    <h3>2025 UNC</h3>
-                </div>
-                <div id="album2-data" style="display:none;">
-                    <div class="imgs"><img src="images/2025-UNC/2025-Chapel Hill-20251202 SRG Portrait_06299.webp" data-tag="2025 • Chapel Hill" data-cap="20251202 SRG Portrait_06299">
-<img src="images/2025-UNC/2025-Chapel Hill-20251202 SRG Portrait_06299.webp" data-tag="2025 • Chapel Hill" data-cap="20251202 SRG Portrait_06299">
-<img src="images/2025-UNC/2025-Chapel Hill-20251202 SRG Portrait_06299_4x6.webp" data-tag="2025 • Chapel Hill" data-cap="20251202 SRG Portrait_06299_4x6">
-<img src="images/2025-UNC/2025-Chapel Hill-20251202 SRG Portrait_06299_4x6.webp" data-tag="2025 • Chapel Hill" data-cap="20251202 SRG Portrait_06299_4x6">
-<img src="images/2025-UNC/2026-logo-logo.webp" data-tag="2026 • logo" data-cap="logo">
-<img src="images/2025-UNC/2026-logo-logo.webp" data-tag="2026 • logo" data-cap="logo"></div>
-                </div>
-            </div>
-            <div class="album-trigger item-3" onclick="openCinema('album3')">
-                <img src="images/2022-UCF/2022-Orlando-IMG_1188.webp">
-                <div class="trigger-info">
-                    <span>PROJECT 03</span>
-                    <h3>2022 UCF</h3>
-                </div>
-                <div id="album3-data" style="display:none;">
-                    <div class="imgs"><img src="images/2022-UCF/2022-Orlando-IMG_1188.webp" data-tag="2022 • Orlando" data-cap="IMG_1188">
-<img src="images/2022-UCF/2022-Orlando-IMG_1188.webp" data-tag="2022 • Orlando" data-cap="IMG_1188">
-<img src="images/2022-UCF/2022-Orlando-IMG_2943.webp" data-tag="2022 • Orlando" data-cap="IMG_2943">
-<img src="images/2022-UCF/2022-Orlando-IMG_2943.webp" data-tag="2022 • Orlando" data-cap="IMG_2943"></div>
-                </div>
-            </div>
-            <div class="album-trigger item-4" onclick="openCinema('album4')">
-                <img src="images/2021-UCF/2021-Orlando-Bird1.webp">
-                <div class="trigger-info">
-                    <span>PROJECT 04</span>
-                    <h3>2021 UCF</h3>
-                </div>
-                <div id="album4-data" style="display:none;">
-                    <div class="imgs"><img src="images/2021-UCF/2021-Orlando-Bird1.webp" data-tag="2021 • Orlando" data-cap="Bird1">
-<img src="images/2021-UCF/2021-Orlando-Bird2.webp" data-tag="2021 • Orlando" data-cap="Bird2">
-<img src="images/2021-UCF/2021-Orlando-photograaphy.webp" data-tag="2021 • Orlando" data-cap="photograaphy"></div>
-                </div>
-            </div>
-</main>
+    <main class="archive-float" id="galleryGrid">
+        </main>
 </div>
+
+<div id="galleryData" style="display:none;">
+    </div>
 
 <div class="cinema-overlay" id="cinemaOverlay">
     <div class="cinema-header">
         <h2 id="cTitle" style="font-family: 'Playfair Display'; font-style: italic; color: var(--accent); font-size: 2rem;">Studio</h2>
         <div class="close-cinema" onclick="closeCinema()">Exit Studio</div>
     </div>
-    <div class="stage-3d"><div class="cylinder" id="cylinder"></div></div>
+    <div class="stage-3d">
+        <div class="cylinder" id="cylinder"></div>
+    </div>
     <div class="cinema-nav">
         <button class="nav-link" onclick="manualNav('prev')">Prev</button>
         <button class="nav-link" onclick="manualNav('next')">Next</button>
     </div>
 </div>
 
+<script src="builder.js"></script>
 <script>
     const cylinder = document.getElementById('cylinder');
     const overlay = document.getElementById('cinemaOverlay');
@@ -264,6 +250,7 @@
     }
 
     function rotateCylinder(dir) {
+        if(totalSlides <= 1) return;
         const angleStep = 360 / totalSlides;
         dir === 'next' ? (rotation -= angleStep, currentIndex = (currentIndex + 1) % totalSlides) 
                        : (rotation += angleStep, currentIndex = (currentIndex - 1 + totalSlides) % totalSlides);
