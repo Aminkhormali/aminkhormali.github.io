@@ -3,7 +3,7 @@ const path = require('path');
 
 const IMAGE_DIR = './images';
 const TEMPLATE_FILE = './template.html';
-const OUTPUT_FILE = './index.html';
+const OUTPUT_FILE = './anthology.html';
 
 function build() {
     console.log('Building Portfolio...');
