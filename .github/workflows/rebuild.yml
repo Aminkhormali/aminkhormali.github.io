@@ -6,13 +6,13 @@ on:
       - 'images/**'
       - 'template.html'
       - 'builder.js'
-  workflow_dispatch: # Allows you to run it manually from the Actions tab
+  workflow_dispatch: 
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Crucial for pushing the file back
+      contents: write 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,14 +21,31 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        # This step downloads 'sharp' so builder.js can use it
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            npm init -y
+            npm install sharp
+          fi
 
       - name: Run Builder Script
         run: node builder.js
 
-      - name: Commit and Push Anthology
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          
+          # Add the generated HTML
           git add anthology.html
-          git commit -m "Update anthology gallery" || echo "No changes"
+          
+          # Add any new .webp files created from HEIF conversion
+          git add images/**/*.webp
+          
+          git commit -m "Automated build: Update anthology and process images" || echo "No changes to commit"
           git push
