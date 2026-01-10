@@ -10,7 +10,7 @@ function build() {
     
     if (!fs.existsSync(TEMPLATE_FILE)) {
         console.error("Error: template.html not found!");
-        return;
+        process.exit(1);
     }
 
     if (!fs.existsSync(IMAGE_DIR)) {
@@ -65,5 +65,5 @@ function build() {
     console.log('--- Build Complete ---');
 }
 
-// Run the build once
+// Just run the build once
 build();
