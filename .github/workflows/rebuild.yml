@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write 
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -21,17 +21,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'npm' # Speeds up subsequent runs
 
       - name: Install Dependencies
-        # This step downloads 'sharp' so builder.js can use it
+        # This step is the fix for the 'Cannot find module sharp' error
         run: |
-          if [ -f package.json ]; then
-            npm install
-          else
-            npm init -y
-            npm install sharp
-          fi
+          npm init -y
+          npm install sharp
 
       - name: Run Builder Script
         run: node builder.js
@@ -41,11 +37,10 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
-          # Add the generated HTML
+          # Stage the generated HTML and all newly converted webp images
           git add anthology.html
-          
-          # Add any new .webp files created from HEIF conversion
           git add images/**/*.webp
           
-          git commit -m "Automated build: Update anthology and process images" || echo "No changes to commit"
+          # Only commit if there are actually changes to avoid workflow errors
+          git commit -m "Update anthology and process new images" || echo "No changes to commit"
           git push
