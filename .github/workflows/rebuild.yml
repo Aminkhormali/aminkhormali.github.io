@@ -22,19 +22,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Sharp
-        # We manually initialize and install to ensure the environment is ready
-        run: |
-          npm init -y
-          npm install sharp
-
-      - name: Install Dependencies
+      - name: Install System Dependencies for HEIC
+        # libvips is the underlying engine for Sharp; libheif handles the format
         run: |
           sudo apt-get update
-          sudo apt-get install -y libheif-dev
+          sudo apt-get install -y libvips-dev libheif-dev
+
+      - name: Install Node Dependencies
+        run: |
           npm init -y
-          # Installing sharp with global platforms to ensure HEIC compatibility
-          npm install --platform=linux --arch=x64 sharp
+          # Installing sharp once with the correct system flags
+          npm install sharp
 
       - name: Run Builder Script
         run: node builder.js
@@ -43,8 +41,14 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          
+          # Stage HTML and converted WebP images
           git add anthology.html
           git add images/**/*.webp
+          
+          # This stages the deletion of the original HEIC files 
+          # (assuming your builder.js uses fs.unlinkSync)
+          git add -u 
+          
           git commit -m "Update anthology and optimized images" || echo "No changes"
           git push
-          
