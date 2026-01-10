@@ -21,9 +21,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # Removed cache: 'npm' to fix the "lock file not found" error
 
-      - name: Install Dependencies
+      - name: Install Sharp
+        # We manually initialize and install to ensure the environment is ready
         run: |
           npm init -y
           npm install sharp
@@ -35,15 +35,8 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          
-          # Stage the generated HTML
           git add anthology.html
-          
-          # Stage all webp images (newly converted and optimized)
           git add images/**/*.webp
-          
-          # Optional: Stage deletions if your builder.js deletes original HEIFs
-          git add -u
-          
-          git commit -m "Update anthology and process new images" || echo "No changes to commit"
+          git commit -m "Update anthology and optimized images" || echo "No changes"
           git push
+          
