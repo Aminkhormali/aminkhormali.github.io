@@ -151,6 +151,7 @@
         }
 
         .abstract-details { flex: 1; }
+
         .abstract-details summary {
             list-style: none;
             cursor: pointer;
@@ -164,6 +165,8 @@
             gap: 8px;
             transition: 0.3s;
         }
+        
+        .abstract-details summary:hover { color: var(--gold-bright); }
         .abstract-details summary::-webkit-details-marker { display: none; }
         .abstract-details summary::before { content: '＋'; color: var(--gold-bright); font-weight: bold; }
         .abstract-details[open] summary::before { content: '－'; }
@@ -192,6 +195,7 @@
             margin-top: 10px;
             border-left: 2px solid var(--gold-metallic);
             animation: slideDown 0.3s ease-out;
+            width: 100%;
         }
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
@@ -233,9 +237,13 @@
         <input type="text" id="searchInput" placeholder="Search title or abstract..." onkeyup="filterArticles()">
         <select id="yearFilter" onchange="filterArticles()">
             <option value="all">All Years</option>
+            <option value="2024">2024</option>
+            <option value="2021">2021</option>
         </select>
         <select id="fieldFilter" onchange="filterArticles()">
             <option value="all">All Topics</option>
+            <option value="AI">AI & Deep Learning</option>
+            <option value="Network">Network Security</option>
         </select>
     </div>
 
@@ -244,97 +252,86 @@
 </div>
 
 <script>
-    // Configuration for Charts
-    const yearsLabel = ['2019', '2020', '2021', '2022', '2023', '2024'];
-
-    async function loadData() {
-        try {
-            // This fetches your JSON file from your GitHub repository
-            const response = await fetch('./articles.json');
-            if (!response.ok) throw new Error('JSON file not found');
-            const articles = await response.json();
-            
-            setupFilters(articles);
-            renderArticles(articles);
-            initCharts();
-        } catch (err) {
-            console.error(err);
-            document.getElementById('articlesList').innerHTML = `<p style="text-align:center;">Error loading data. Ensure articles.json exists.</p>`;
-        }
-    }
-
-    function setupFilters(articles) {
-        const yearSelect = document.getElementById('yearFilter');
-        const fieldSelect = document.getElementById('fieldFilter');
+    const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+    
+    window.onload = async () => {
+        // Init Charts
+        initCharts();
         
-        const years = [...new Set(articles.map(a => a.year))].sort((a,b) => b-a);
-        const fields = [...new Set(articles.map(a => a.topic))].sort();
+        // Load Publications
+        try {
+            const response = await fetch('publications.json');
+            const publications = await response.json();
+            renderArticles(publications);
+        } catch (error) {
+            console.error('Error loading publications:', error);
+            document.getElementById('articlesList').innerHTML = '<p style="text-align:center">Error loading publications. Please ensure publications.json is present.</p>';
+        }
+    };
 
-        years.forEach(y => yearSelect.innerHTML += `<option value="${y}">${y}</option>`);
-        fields.forEach(f => fieldSelect.innerHTML += `<option value="${f}">${f}</option>`);
+    function initCharts() {
+        const pCtx = document.getElementById('pubChart').getContext('2d');
+        new Chart(pCtx, { 
+            type: 'bar', 
+            data: { labels: years, datasets: [{ data: [4, 6, 5, 8, 5, 7], backgroundColor: '#F9D423' }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
+        const cCtx = document.getElementById('citeChart').getContext('2d');
+        new Chart(cCtx, { 
+            type: 'line', 
+            data: { labels: years, datasets: [{ data: [120, 380, 650, 920, 1150, 1420], borderColor: '#F9D423', fill: false }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
     }
 
-    function renderArticles(articles) {
+    function renderArticles(publications) {
         const container = document.getElementById('articlesList');
-        container.innerHTML = articles.map(art => `
-            <div class="article-card" data-year="${art.year}" data-field="${art.topic}">
+        container.innerHTML = publications.map(pub => `
+            <div class="article-card" data-year="${pub.year}" data-field="${pub.field}">
                 <div class="article-img-wrapper">
-                    <img src="${art.image}" alt="Article Preview">
+                    <img src="${pub.image}" alt="Publication image">
                 </div>
                 <div class="article-content">
-                    <div class="article-meta">${art.year} • ${art.topic}</div>
-                    <h2 class="article-title">${art.title}</h2>
-                    <div class="article-venue">${art.venue}</div>
+                    <div class="article-meta">${pub.year} • ${pub.fieldType}</div>
+                    <h2 class="article-title">${pub.title}</h2>
+                    <div class="article-venue">${pub.venue}</div>
                     
                     <div class="abstract-header">
                         <details class="abstract-details">
                             <summary>View Abstract</summary>
-                            <div class="article-abstract">${art.abstract}</div>
+                            <div class="article-abstract">${pub.abstract}</div>
                         </details>
                         <div class="citation-badge">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z"/></svg>
-                            ${art.citations} Citations
+                            ${pub.citations} Citations
                         </div>
                     </div>
 
-                    <a href="${art.link}" target="_blank" class="box-btn">Read Publication <span>→</span></a>
+                    <a href="${pub.link}" class="box-btn">Read Publication <span>→</span></a>
                 </div>
             </div>
         `).join('');
     }
 
-    function initCharts() {
-        new Chart(document.getElementById('pubChart'), {
-            type: 'bar',
-            data: { labels: yearsLabel, datasets: [{ data: [4, 6, 5, 8, 5, 7], backgroundColor: '#F9D423' }] },
-            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-        new Chart(document.getElementById('citeChart'), {
-            type: 'line',
-            data: { labels: yearsLabel, datasets: [{ data: [120, 380, 650, 920, 1150, 1420], borderColor: '#F9D423', fill: false }] },
-            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-    }
-
     function filterArticles() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const year = document.getElementById('yearFilter').value;
-        const field = document.getElementById('fieldFilter').value;
-
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        const selectedYear = document.getElementById('yearFilter').value;
+        const selectedField = document.getElementById('fieldFilter').value;
+        
         document.querySelectorAll('.article-card').forEach(card => {
-            const text = card.innerText.toLowerCase();
+            const title = card.querySelector('.article-title').innerText.toLowerCase();
+            const abstract = card.querySelector('.article-abstract').innerText.toLowerCase();
             const cardYear = card.dataset.year;
             const cardField = card.dataset.field;
 
-            const matchesSearch = text.includes(query);
-            const matchesYear = year === 'all' || cardYear === year;
-            const matchesField = field === 'all' || cardField === field;
+            const matchesKeyword = title.includes(searchText) || abstract.includes(searchText);
+            const matchesYear = selectedYear === 'all' || cardYear === selectedYear;
+            const matchesField = selectedField === 'all' || cardField === selectedField;
 
-            card.style.display = (matchesSearch && matchesYear && matchesField) ? 'grid' : 'none';
+            card.style.display = (matchesKeyword && matchesYear && matchesField) ? 'grid' : 'none';
         });
     }
-
-    window.onload = loadData;
 </script>
+
 </body>
 </html>
