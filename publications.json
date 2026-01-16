@@ -1,0 +1,37 @@
+[
+  {
+    "year": "2024",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
+    "citations": "84",
+    "link": "#"
+  },
+  
+    {
+    "year": "2024",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
+    "citations": "84",
+    "link": "#"
+  },
+  
+    {
+    "year": "2024",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
+    "citations": "84",
+    "link": "#"
+  }
+]
