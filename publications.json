@@ -1,37 +1,46 @@
 [
   {
     "year": "2024",
-    "field": "AI",
-    "fieldType": "AI & Deep Learning",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
+    "field": "DF",
+    "fieldType": "Deepfake Detection",
+    "image": "deepfake_graph.jpg",
     "title": "Self-Supervised Graph Transformer for Deepfake Detection",
-    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
-    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
-    "citations": "84",
-    "link": "#"
+    "venue": "IEEE Access / CVPR",
+    "abstract": "A novel approach using spatial-temporal graph reasoning and self-supervised learning to detect high-fidelity manipulated media.",
+    "citations": 35,
+    "link": "https://doi.org/10.1109/ACCESS.2024.001"
   },
-  
-    {
-    "year": "2024",
-    "field": "AI",
-    "fieldType": "AI & Deep Learning",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
-    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
-    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
-    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
-    "citations": "84",
-    "link": "#"
+  {
+    "year": "2022",
+    "field": "DF",
+    "fieldType": "Deepfake Detection",
+    "image": "vision_transformer.jpg",
+    "title": "DFDT: An End-to-End Deepfake Detection Framework using Vision Transformer",
+    "venue": "Applied Sciences",
+    "abstract": "Proposing a transformer-based architecture for identifying digital forgeries in video sequences.",
+    "citations": 76,
+    "link": "https://doi.org/10.3390/app12062953"
   },
-  
-    {
-    "year": "2024",
-    "field": "AI",
-    "fieldType": "AI & Deep Learning",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80",
-    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
-    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
-    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
-    "citations": "84",
-    "link": "#"
+  {
+    "year": "2021",
+    "field": "CS",
+    "fieldType": "Cybersecurity & Privacy",
+    "image": "dns_security.jpg",
+    "title": "Domain Name System Security and Privacy: A Contemporary Survey",
+    "venue": "Computer Networks",
+    "abstract": "A comprehensive analysis of DNS vulnerabilities, mitigation strategies, and privacy-preserving protocols.",
+    "citations": 93,
+    "link": "https://doi.org/10.1016/j.comnet.2020.107699"
+  },
+  {
+    "year": "2019",
+    "field": "IOT",
+    "fieldType": "IoT Malware Analysis",
+    "image": "iot_malware.jpg",
+    "title": "Analyzing and Detecting Emerging Internet of Things Malware: A Graph-Based Approach",
+    "venue": "IEEE Internet of Things Journal",
+    "abstract": "Utilizing graph-based representations of binary code to identify malicious patterns in heterogeneous IoT ecosystems.",
+    "citations": 216,
+    "link": "https://doi.org/10.1109/JIOT.2019.2923701"
   }
 ]
